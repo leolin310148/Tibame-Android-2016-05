@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class Main3Activity extends AppCompatActivity {
@@ -27,6 +28,8 @@ public class Main3Activity extends AppCompatActivity {
         });
 
 
+        ImageView imageView = (ImageView) findViewById(R.id.imageView);
+        imageView.setImageResource(R.drawable.amazon);
     }
 
     public void buttonClicked(View view) {
