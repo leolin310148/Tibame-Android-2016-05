@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.tibame.myfirstapp.Main3Activity">
+
+    <TextView
+        android:id="@+id/textView1"
+        android:textColor="#ff0000"
+        android:textSize="18sp"
+        android:text="@string/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <TextView
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="#ff0000"
+        android:textSize="18sp"
+        android:text="jgoidsjgojdgoisdjgopsdjgsjpogjspodgjps"
+        android:layout_width="36dp"
+        android:layout_height="wrap_content" />
+
+
+    <EditText
+        android:hint="帳號"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:inputType="textPassword"
+        android:hint="密碼"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:inputType="numberDecimal"
+        android:hint="年齡"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:onClick="buttonClicked"
+        android:id="@+id/buttonOk"
+        android:text="確定"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/buttonCancel"
+        android:text="取消"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>
