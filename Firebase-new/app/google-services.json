@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "811758642357",
+    "firebase_url": "https://leo-firebase-new-test.firebaseio.com",
+    "project_id": "leo-firebase-new-test",
+    "storage_bucket": "leo-firebase-new-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:811758642357:android:3185c7c37d8af8a9",
+        "android_client_info": {
+          "package_name": "me.leolin.firebase_new"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "811758642357-agvr8osmtaaf4bri1un2delmts8nri4c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "me.leolin.firebase_new",
+            "certificate_hash": "0A967D3102F73417CB99B910614CA882849C971F"
+          }
+        },
+        {
+          "client_id": "811758642357-goq8h203q18rug6tfdkr0b2mv5vdl6ik.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADlZqSL8Bm4GUwZT0mcTGw1M4q7lF-lBA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "811758642357-goq8h203q18rug6tfdkr0b2mv5vdl6ik.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
