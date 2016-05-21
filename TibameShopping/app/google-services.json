@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "338354030383",
+    "firebase_url": "https://tibame-leo-test.firebaseio.com",
+    "project_id": "tibame-leo-test",
+    "storage_bucket": "tibame-leo-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:338354030383:android:80bb1b2d066e9370",
+        "android_client_info": {
+          "package_name": "com.tibame.shopping"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "338354030383-t40qd7juq64vu950m5t1pfvqtqeqjitv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tibame.shopping",
+            "certificate_hash": "2DB0EC39B0E3E082039F68402DE99DEEAB0AABF6"
+          }
+        },
+        {
+          "client_id": "338354030383-22drj13h5r5ilpjf82ffr4cfauac01fq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJYv1pp4D14_GlNDqAyrZPqPFUodVblEc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "338354030383-22drj13h5r5ilpjf82ffr4cfauac01fq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
