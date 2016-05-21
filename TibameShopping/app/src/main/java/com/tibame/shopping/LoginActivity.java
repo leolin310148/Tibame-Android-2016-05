@@ -24,6 +24,47 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void doLogin(View view) {
+
+        EditText editTextAccount = (EditText) findViewById(R.id.editTextAccount);
+        EditText editTextPassword = (EditText) findViewById(R.id.editTextPassword);
+
+        String account = editTextAccount.getText().toString();
+        String password = editTextPassword.getText().toString();
+
+        if (TextUtils.isEmpty(account)) {
+            Toast.makeText(this, "帳號不能空白", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (TextUtils.isEmpty(password)) {
+            Toast.makeText(this, "密碼不能空白", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        final ProgressDialog dialog = ProgressDialog.show(this, "登入中", "請稍候");
+
+        auth.signInWithEmailAndPassword(account, password)
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(LoginActivity.this, "登入失敗", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        dialog.dismiss();
+
+                        if (task.isSuccessful()) {
+                            finish();
+                        }
+
+                    }
+                });
+
+
     }
 
     public void doSingUp(View view) {
@@ -52,7 +93,6 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        dialog.dismiss();
                         Toast.makeText(LoginActivity.this, "註冊失敗", Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -60,7 +100,10 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         dialog.dismiss();
-                        finish();
+
+                        if (task.isSuccessful()) {
+                            finish();
+                        }
                     }
                 });
 
