@@ -2,6 +2,7 @@ package com.tibame.shopping;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -17,20 +18,27 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FirebaseAuth auth = FirebaseAuth.getInstance();
+        final FirebaseAuth auth = FirebaseAuth.getInstance();
 
-        FirebaseUser currentUser = auth.getCurrentUser();
 
-        TextView textViewCurrentUserName = (TextView) findViewById(R.id.textViewCurrentUserName);
-        Button buttonLogin = (Button) findViewById(R.id.buttonLogin);
+        auth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser currentUser = auth.getCurrentUser();
 
-        if (currentUser == null) {
-            textViewCurrentUserName.setText(  "還沒有登入"  );
-            buttonLogin.setText(  "登入"  );
-        } else {
-            textViewCurrentUserName.setText(  currentUser.getEmail()  );
-            buttonLogin.setText(  "登出"  );
-        }
+                TextView textViewCurrentUserName = (TextView) findViewById(R.id.textViewCurrentUserName);
+                Button buttonLogin = (Button) findViewById(R.id.buttonLogin);
+
+                if (currentUser == null) {
+                    textViewCurrentUserName.setText(  "還沒有登入"  );
+                    buttonLogin.setText(  "登入"  );
+                } else {
+                    textViewCurrentUserName.setText(  currentUser.getEmail()  );
+                    buttonLogin.setText(  "登出"  );
+                }
+
+            }
+        });
 
     }
 
