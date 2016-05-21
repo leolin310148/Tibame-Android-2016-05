@@ -15,14 +15,14 @@
 
         <EditText
             android:hint="商品名稱"
-            android:id="@+id/textViewItemName"
+            android:id="@+id/editTextItemName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
 
         <EditText
             android:hint="價格"
-            android:id="@+id/textViewItemPrice"
+            android:id="@+id/editTextItemPrice"
             android:inputType="numberDecimal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
