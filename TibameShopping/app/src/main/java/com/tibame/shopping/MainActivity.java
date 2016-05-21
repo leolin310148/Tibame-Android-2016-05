@@ -30,11 +30,17 @@ public class MainActivity extends AppCompatActivity {
                 Button buttonLogin = (Button) findViewById(R.id.buttonLogin);
 
                 if (currentUser == null) {
-                    textViewCurrentUserName.setText(  "還沒有登入"  );
-                    buttonLogin.setText(  "登入"  );
+                    textViewCurrentUserName.setText("還沒有登入");
+                    buttonLogin.setText("登入");
                 } else {
-                    textViewCurrentUserName.setText(  currentUser.getEmail()  );
-                    buttonLogin.setText(  "登出"  );
+                    if (currentUser.getDisplayName() != null) {
+                        textViewCurrentUserName.setText(currentUser.getDisplayName());
+                    } else {
+                        textViewCurrentUserName.setText(currentUser.getEmail());
+                    }
+
+                    buttonLogin.setText("登出");
+
                 }
 
             }
