@@ -70,7 +70,7 @@
 
 
 11. 完成設定並sync gradle後，即可在程式內使用新的Firebase library
-
+---
  
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     database.getReference().child("messages").addValueEventListener(new ValueEventListener() {
