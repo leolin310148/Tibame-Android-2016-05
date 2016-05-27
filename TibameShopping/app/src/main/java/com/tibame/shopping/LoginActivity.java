@@ -166,6 +166,7 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
+                        e.printStackTrace();
                         Toast.makeText(LoginActivity.this, "註冊失敗", Toast.LENGTH_SHORT).show();
                     }
                 })

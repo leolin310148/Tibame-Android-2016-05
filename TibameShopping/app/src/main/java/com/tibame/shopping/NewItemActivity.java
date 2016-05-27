@@ -19,11 +19,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -113,11 +115,15 @@ public class NewItemActivity extends AppCompatActivity {
     }
 
     private void saveItem(String itemName, Integer itemPrice, String url) {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
 
         Map<String, Object> itemMap = new HashMap<>();
         itemMap.put("itemName", itemName);
         itemMap.put("itemPrice", itemPrice);
         itemMap.put("url", url);
+        itemMap.put("userId", auth.getCurrentUser().getUid());
+        itemMap.put("createdAt", new Date().getTime());
+
 
         final ProgressDialog dialog = ProgressDialog.show(this, "新增商品中", "請稍候");
 

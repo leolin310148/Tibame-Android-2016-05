@@ -31,6 +31,10 @@ dependencies {
     compile 'com.google.firebase:firebase-auth:9.0.0'
 
     compile 'com.facebook.android:facebook-android-sdk:[4,5)'
+
+    compile group: 'com.github.bumptech.glide', name: 'glide', version: '3.7.0'
+
+
 }
 
 apply plugin: 'com.google.gms.google-services'
