@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -73,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
                     textViewCurrentUserName.setText("還沒有登入");
                     buttonLogin.setText("登入");
                     fab.setVisibility(View.GONE);
+
+                    startService(new Intent(MainActivity.this, OrderNotifyIntentService.class).setAction("logout"));
                 } else {
                     if (currentUser.getDisplayName() != null) {
                         textViewCurrentUserName.setText(currentUser.getDisplayName());
@@ -82,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
 
                     buttonLogin.setText("登出");
                     fab.setVisibility(View.VISIBLE);
+
+                    startService(new Intent(MainActivity.this, OrderNotifyIntentService.class).setAction("login"));
                 }
 
             }
@@ -138,6 +143,15 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                 }
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                DataSnapshot dataSnapshot = (DataSnapshot) parent.getItemAtPosition(position);
+                String itemId = dataSnapshot.getKey();
+                startActivity(new Intent(MainActivity.this, ItemDetailActivity.class).putExtra("itemId", itemId));
             }
         });
     }
