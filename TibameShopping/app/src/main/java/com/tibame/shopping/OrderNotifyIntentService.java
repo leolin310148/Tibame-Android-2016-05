@@ -3,6 +3,7 @@ package com.tibame.shopping;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
@@ -31,13 +32,31 @@ public class OrderNotifyIntentService extends IntentService {
 
                 NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
+                PendingIntent pendingIntent = PendingIntent.getActivity(
+                        getApplicationContext(),
+                        0,
+                        new Intent(getApplicationContext(), MainActivity.class),
+                        PendingIntent.FLAG_ONE_SHOT
+                );
+
                 Notification notification = new NotificationCompat.Builder(getApplicationContext())
                         .setContentTitle("你有新訂單")
                         .setContentText(dataSnapshot.getChildrenCount() + "筆")
                         .setSmallIcon(R.mipmap.ic_launcher)
+                        .setContentIntent(pendingIntent)
                         .build();
 
                 notificationManager.notify(1209, notification);
+
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                FirebaseAuth auth = FirebaseAuth.getInstance();
+                FirebaseUser currentUser = auth.getCurrentUser();
+                for (DataSnapshot orderNotifySnapshot : dataSnapshot.getChildren()) {
+                    database.getReference().child("ordersNotify")
+                            .child(currentUser.getUid())
+                            .child(orderNotifySnapshot.getKey())
+                            .setValue(true);
+                }
             }
 
         }
