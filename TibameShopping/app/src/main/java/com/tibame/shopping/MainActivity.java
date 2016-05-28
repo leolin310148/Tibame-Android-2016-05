@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -19,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -29,6 +31,9 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
+
+    int limit = 10;
+    Query query;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,11 +83,9 @@ public class MainActivity extends AppCompatActivity {
         final ItemListAdapter adapter = new ItemListAdapter(MainActivity.this);
         listView.setAdapter(adapter);
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        database.getReference().child("items")
-                .orderByChild("createdAt")
-                .limitToLast(50)
-                .addValueEventListener(new ValueEventListener() {
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        final ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -106,6 +109,38 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+
+        query = database.getReference().child("items")
+                .orderByChild("createdAt")
+                .limitToLast(limit + 1);
+
+        query.addValueEventListener(valueEventListener);
+
+
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                if (listView.getLastVisiblePosition() == adapter.getCount() - 1) {
+
+                    if (adapter.getCount() > limit) {
+                        limit += 10;
+                        query.removeEventListener(valueEventListener);
+                        query = database.getReference().child("items")
+                                .orderByChild("createdAt")
+                                .limitToLast(limit + 1);
+                        query.addValueEventListener(valueEventListener);
+
+                    }
+
+                }
 
             }
         });
