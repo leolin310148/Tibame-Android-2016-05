@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -74,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
                     fab.setVisibility(View.VISIBLE);
 
                     //ItemGenerator.generateItems();
+
+                    waitOrderNotify(currentUser);
+
                 }
 
             }
@@ -151,11 +155,36 @@ public class MainActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 DataSnapshot dataSnapshot = (DataSnapshot) parent.getItemAtPosition(position);
 
-                Intent intent = new Intent(MainActivity.this,ItemDetailActivity.class);
-                intent.putExtra("itemId", dataSnapshot.getKey() );
+                Intent intent = new Intent(MainActivity.this, ItemDetailActivity.class);
+                intent.putExtra("itemId", dataSnapshot.getKey());
                 startActivity(intent);
             }
         });
+
+
+    }
+
+    private void waitOrderNotify(FirebaseUser currentUser) {
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        String uid = currentUser.getUid();
+        database.getReference().child("ordersNotify")
+                .child(uid)
+                .orderByValue().equalTo(false)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.getChildrenCount() > 0) {
+                            Toast.makeText(MainActivity.this, "新的訂單！", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
 
     }
 

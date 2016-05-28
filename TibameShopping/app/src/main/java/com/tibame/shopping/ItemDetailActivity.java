@@ -19,6 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
@@ -120,14 +121,17 @@ public class ItemDetailActivity extends AppCompatActivity {
                         Map<String, Object> orderMap = new HashMap<String, Object>();
                         orderMap.put("itemId", itemId);
                         orderMap.put("buyerId", currentUser.getUid());
-                        orderMap.put("sellerId", dataSnapshot.child("userId").getValue());
+                        String sellerId = dataSnapshot.child("userId").getValue().toString();
+                        orderMap.put("sellerId", sellerId);
 
                         final ProgressDialog progressDialog = ProgressDialog.show(ItemDetailActivity.this, "處理中", "請稍候");
 
-                        database.getReference()
+                        DatabaseReference order = database.getReference()
                                 .child("orders")
-                                .push()
-                                .setValue(orderMap)
+                                .push();
+
+
+                        order.setValue(orderMap)
                                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
@@ -136,6 +140,11 @@ public class ItemDetailActivity extends AppCompatActivity {
                                         finish();
                                     }
                                 });
+
+                        database.getReference().child("ordersNotify")
+                                .child(sellerId)
+                                .child(order.getKey())
+                                .setValue(false);
                     }
                 })
                 .show();
