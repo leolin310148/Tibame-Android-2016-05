@@ -123,6 +123,8 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Toast.makeText(LoginActivity.this, "登入失敗", Toast.LENGTH_SHORT).show();
+                        Log.e("LoginActivity","Error during login ",e);
+
                     }
                 })
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {

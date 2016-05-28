@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -142,6 +143,17 @@ public class MainActivity extends AppCompatActivity {
 
                 }
 
+            }
+        });
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                DataSnapshot dataSnapshot = (DataSnapshot) parent.getItemAtPosition(position);
+
+                Intent intent = new Intent(MainActivity.this,ItemDetailActivity.class);
+                intent.putExtra("itemId", dataSnapshot.getKey() );
+                startActivity(intent);
             }
         });
 
