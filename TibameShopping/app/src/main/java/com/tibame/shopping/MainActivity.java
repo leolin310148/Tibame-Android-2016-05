@@ -11,10 +11,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,6 +69,33 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        final ListView listView = (ListView) findViewById(R.id.listView);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        database.getReference().child("items").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                List<DataSnapshot> list = new ArrayList<>();
+
+                for (DataSnapshot itemSnapshot : dataSnapshot.getChildren()) {
+                    list.add(itemSnapshot);
+                }
+
+                //ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, list);
+                ItemListAdapter adapter = new ItemListAdapter(MainActivity.this);
+                listView.setAdapter(adapter);
+
+                adapter.setItems(list);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
 
@@ -99,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void goNewItem(View view) {
-        Intent intent = new Intent(this,NewItemActivity.class);
+        Intent intent = new Intent(this, NewItemActivity.class);
         startActivity(intent);
     }
 }
