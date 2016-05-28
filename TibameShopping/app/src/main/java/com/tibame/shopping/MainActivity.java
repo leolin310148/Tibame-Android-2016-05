@@ -22,6 +22,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -64,6 +66,8 @@ public class MainActivity extends AppCompatActivity {
 
                     buttonLogin.setText("登出");
                     fab.setVisibility(View.VISIBLE);
+
+                    //ItemGenerator.generateItems();
                 }
 
             }
@@ -71,9 +75,14 @@ public class MainActivity extends AppCompatActivity {
 
 
         final ListView listView = (ListView) findViewById(R.id.listView);
+        final ItemListAdapter adapter = new ItemListAdapter(MainActivity.this);
+        listView.setAdapter(adapter);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        database.getReference().child("items").addValueEventListener(new ValueEventListener() {
+        database.getReference().child("items")
+                .orderByChild("createdAt")
+                .limitToLast(50)
+                .addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -83,9 +92,14 @@ public class MainActivity extends AppCompatActivity {
                     list.add(itemSnapshot);
                 }
 
-                //ArrayAdapter<String> adapter = new ArrayAdapter<>(MainActivity.this, android.R.layout.simple_list_item_1, list);
-                ItemListAdapter adapter = new ItemListAdapter(MainActivity.this);
-                listView.setAdapter(adapter);
+                Collections.sort(list, new Comparator<DataSnapshot>() {
+                    @Override
+                    public int compare(DataSnapshot lhs, DataSnapshot rhs) {
+                        Long lhsCreatedAt = lhs.child("createdAt").getValue(Long.class);
+                        Long rhsCreatedAt = rhs.child("createdAt").getValue(Long.class);
+                        return rhsCreatedAt.compareTo(lhsCreatedAt);
+                    }
+                });
 
                 adapter.setItems(list);
             }
