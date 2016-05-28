@@ -15,7 +15,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -41,6 +40,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Intent intent = new Intent(this, OrderNotifyIntentService.class);
+        startService(intent);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolBar);
         setSupportActionBar(toolbar);
@@ -75,9 +77,6 @@ public class MainActivity extends AppCompatActivity {
                     fab.setVisibility(View.VISIBLE);
 
                     //ItemGenerator.generateItems();
-
-                    waitOrderNotify(currentUser);
-
                 }
 
             }
@@ -164,29 +163,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void waitOrderNotify(FirebaseUser currentUser) {
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-        String uid = currentUser.getUid();
-        database.getReference().child("ordersNotify")
-                .child(uid)
-                .orderByValue().equalTo(false)
-                .addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.getChildrenCount() > 0) {
-                            Toast.makeText(MainActivity.this, "新的訂單！", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-
-                    }
-                });
-
-    }
 
 
     @Override
